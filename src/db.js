@@ -3,7 +3,11 @@ require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
 
-const client = new MongoClient("mongodb+srv://rsaade:mongo123!!@firstcluster.cy08auw.mongodb.net/?retryWrites=true&w=majority&appName=firstCluster", {
+if (!uri) {
+    throw new Error('MONGODB_URI is not set. Please configure it in environment variables.');
+}
+
+const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
