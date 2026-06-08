@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <title>Ralph & Melissa Wedding</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: #fffaf5;
+            color: #6f4a2e;
+            overflow-x: hidden;
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+            padding: clamp(45px, 7vw, 90px) 18px;
+            text-align: center;
+        }
+
+        .section-inner {
+            width: min(100%, 1100px);
+            margin: 0 auto;
+        }
+
+        /* =====================
+           DANDELION
+        ===================== */
+
+        .flower-container {
+            position: fixed;
+            left: -30px;
+            bottom: 0;
+            width: 220px;
+            height: 550px;
+            z-index: 999;
+            pointer-events: none;
+            transform-origin: bottom center;
+            animation: flowerSway 5s ease-in-out infinite;
+        }
+
+        .flower-img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            object-position: bottom center;
+        }
+
+        @keyframes flowerSway {
+            0%, 100% {
+                transform: rotate(-2deg);
+            }
+
+            50% {
+                transform: rotate(2deg);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .flower-container {
+                display: none;
+            }
+        }
+
+        .seed {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 998;
+            animation: fly linear forwards;
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+
+            8% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--moveX), var(--moveY)) rotate(360deg) scale(0.7);
+                opacity: 0;
+            }
+        }
+
+        /* =====================
+           HERO
+        ===================== */
+
+        .hero-fullscreen {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 55% 45%;
+            z-index: 0;
+        }
+
+        .hero-fullscreen::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient( to bottom, rgba(0,0,0,0.14), rgba(0,0,0,0.03), rgba(0,0,0,0.38) );
+            z-index: 1;
+        }
+
+        .hero-title {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            width: max-content;
+            max-width: calc(100% - 28px);
+            padding: 12px 20px;
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(38px, 9vw, 72px);
+            color: #5e3b24;
+            background: rgba(255, 251, 243, 0.58);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 18px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            line-height: 1;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: min(100%, 720px);
+            padding: 0 18px 38px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-fullscreen {
+                width: 100%;
+                height: 100vh;
+                max-width: none;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .hero-img {
+                border-radius: 0;
+                object-position: center 42%;
+            }
+        }
+
+        /* =====================
+           COUNTDOWN
+        ===================== */
+
+        .time-boxes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .timebox {
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 12px 8px;
+            color: white;
+        }
+
+            .timebox h2 {
+                font-size: clamp(24px, 7vw, 52px);
+                color: white;
+            }
+
+            .timebox p {
+                margin-top: 4px;
+                font-size: clamp(9px, 2vw, 12px);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: rgba(255,255,255,0.85);
+            }
+
+        /* =====================
+           INVITATION
+        ===================== */
+
+        .invitation {
+            background: #fffaf5;
+        }
+
+        .bible {
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(34px, 8vw, 58px);
+            line-height: 1.1;
+            color: #6f4a2e;
+            margin-bottom: 10px;
+        }
+
+        .verse {
+            margin-bottom: 28px;
+            font-size: 15px;
+            color: #9a7a5a;
+        }
+
+        .intro-text {
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: clamp(18px, 2.4vw, 20px);
+        }
+
+        .names {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(54px, 10vw, 94px);
+            margin: 22px 0 8px;
+            color: #5e3b24;
+        }
+
+        .date-text {
+            font-size: clamp(17px, 2.5vw, 24px);
+            letter-spacing: 1px;
+            color: #9a7a5a;
+        }
+
+        /* =====================
+           BANNER
+        ===================== */
+
+        .parallax-banner {
+            position: relative;
+            min-height: 340px;
+            overflow: hidden;
+            background-image: none;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 0;
+        }
+
+        .parallax-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(30,20,10,0.24), rgba(30,20,10,0.24));
+            z-index: 1;
+        }
+
+        .parallax-banner-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            background: #2a1a10;
+            z-index: 0;
+        }
+
+        .banner-title {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* LEFT instead of center */
+            z-index: 2;
+
+            padding-left: clamp(20px, 6vw, 80px);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(44px, 9vw, 100px);
+            color: #fff7ea;
+            text-align: left;
+            text-shadow: 0 4px 14px rgba(0,0,0,0.35);
+            animation: celebrateFloat 4s ease-in-out infinite;
+        }
+
+            .banner-title span {
+                position: relative;
+                display: inline-block;
+                width: auto;
+                max-width: 70%;
+                text-align: center;
+                padding-bottom: 10px;
+            }
+            .banner-title span::after {
+                content: "";
+                position: absolute;
+                left: 10%;
+                right: 10%;
+                bottom: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #f7e4c6, transparent);
+                animation: celebrateShimmer 2.8s ease-in-out infinite;
+                transform-origin: center;
+            }
+
+           
+
+        @keyframes celebrateFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .parallax-banner {
+                height: 620px;
+                background-image: url('banner_2.jpeg');
+                background-attachment: fixed;
+            }
+
+            .parallax-banner-img {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .parallax-banner {
+                background-image: none;
+                min-height: auto;
+                aspect-ratio: 3 / 2;
+            }
+
+            .parallax-banner::before {
+                background: linear-gradient(rgba(30,20,10,0.12), rgba(30,20,10,0.12));
+            }
+        }
+
+        /* =====================
+           VENUE CARDS
+        ===================== */
+
+        .venue-card {
+            width: min(100%, 1100px);
+            margin: 36px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 14px 35px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .venue-photo {
+            width: 100%;
+            height: clamp(220px, 45vw, 420px);
+            object-fit: cover;
+            object-position: center;
+            border-radius: 22px;
+            display: block;
+            margin-bottom: 24px;
+        }
+
+        .venue-info {
+            padding: 4px 8px 12px;
+        }
+
+            .venue-info h3 {
+                font-family: 'Great Vibes', cursive;
+                font-size: clamp(28px, 4vw, 42px);
+                color: #6f4a2e;
+                margin-bottom: 10px;
+                line-height: 1.1;
+            }
+
+            .venue-info p {
+                color: #9a7a5a;
+                font-size: 17px;
+                line-height: 1.6;
+                margin-bottom: 6px;
+            }
+
+        .button {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 11px 24px;
+            border-radius: 999px;
+            background: #caa27c;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+            .button:hover {
+                transform: translateY(-2px);
+                background: #b88e68;
+            }
+
+        @media (min-width: 900px) {
+            .venue-card {
+                display: grid;
+                grid-template-columns: 65% 35%;
+                align-items: center;
+                gap: 30px;
+                padding: 28px;
+                text-align: center;
+            }
+
+            .venue-photo {
+                height: 420px;
+                margin-bottom: 0;
+            }
+
+            .venue-info {
+                padding: 20px;
+            }
+        }
+
+        /* =====================
+           RSVP BANNER
+        ===================== */
+
+        .rsvp-banner {
+            background: white;
+            border-radius: 0;
+            padding: clamp(45px, 7vw, 80px) 18px;
+            overflow: hidden;
+        }
+
+        .rsvp-banner-photos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(10px, 4vw, 26px);
+        }
+
+        .rsvp-photo-frame {
+            width: min(42vw, 280px);
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            border-radius: 24px;
+            border: 4px solid rgba(255,255,255,0.86);
+            box-shadow: 0 12px 28px rgba(70,45,24,0.22);
+        }
+
+            .rsvp-photo-frame.left {
+                transform: rotate(-4deg);
+                animation: rsvpPhotoLeft 4.8s ease-in-out infinite;
+            }
+
+            .rsvp-photo-frame.right {
+                transform: rotate(4deg);
+                animation: rsvpPhotoRight 5.2s ease-in-out infinite;
+            }
+
+        .rsvp-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .rsvp-banner-title {
+            margin-top: 26px;
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(42px, 8vw, 76px);
+            color: #7a4e2c;
+        }
+
+        @keyframes rsvpPhotoLeft {
+            0%, 100% {
+                transform: rotate(-4deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(-2deg) translateY(-8px);
+            }
+        }
+
+        @keyframes rsvpPhotoRight {
+            0%, 100% {
+                transform: rotate(4deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(2deg) translateY(-10px);
+            }
+        }
+
+        /* =====================
+           RSVP FORM
+        ===================== */
+
+        .guest-card {
+            background: white;
+            padding: 18px 22px;
+            border-radius: 20px;
+            margin: 12px auto;
+            width: min(100%, 600px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .guest-name {
+            font-size: 17px;
+            color: #6f4a2e;
+            text-align: center;
+        }
+
+        .rsvp-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+            .rsvp-options input[type="radio"] {
+                display: none;
+            }
+
+            .rsvp-options label {
+                cursor: pointer;
+                padding: 8px 16px;
+                border-radius: 999px;
+                border: 2px solid #caa27c;
+                color: #caa27c;
+                font-size: 13px;
+                transition: all 0.2s ease;
+                user-select: none;
+                white-space: nowrap;
+            }
+
+            .rsvp-options input[type="radio"]:checked + label {
+                background: #caa27c;
+                color: white;
+            }
+
+        @media (min-width: 768px) {
+            .guest-card {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .guest-name {
+                text-align: left;
+            }
+        }
+
+        .wishes-box {
+            background: white;
+            padding: 24px;
+            border-radius: 22px;
+            margin: 20px auto;
+            width: min(100%, 600px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+            .wishes-box p {
+                margin-bottom: 12px;
+            }
+
+            .wishes-box textarea {
+                width: 100%;
+                height: 130px;
+                padding: 14px 16px;
+                border: 2px solid #e8d5c0;
+                border-radius: 16px;
+                font-family: 'Playfair Display', serif;
+                font-size: 15px;
+                color: #5a3e2b;
+                resize: none;
+                outline: none;
+                background: #fffaf5;
+            }
+
+        /* =====================
+           REGISTRY
+        ===================== */
+
+        .registry-section {
+            padding-top: 30px;
+        }
+
+        .registry-shell {
+            width: min(100%, 620px);
+            margin: 0 auto;
+            border-radius: 24px;
+            padding: clamp(26px, 5vw, 44px);
+            background: white;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+        }
+
+            .registry-shell h2,
+            .thank-you-section h2 {
+                font-family: 'Great Vibes', cursive;
+                font-size: clamp(46px, 8vw, 72px);
+                color: #6f4a2e;
+                margin-bottom: 12px;
+            }
+
+        .registry-sub {
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .registry-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .registry-row {
+            background: #fffaf5;
+            border-radius: 14px;
+            padding: 13px 16px;
+            border: 1px solid #efe3d6;
+            color: #caa27c;
+            font-size: 15px;
+        }
+
+            .registry-row strong {
+                color: #5f3f28;
+            }
+
+        /* =====================
+           THANK YOU
+        ===================== */
+
+        .thank-you-section {
+            background: white;
+            padding-bottom: 0;
+        }
+
+            .thank-you-section p {
+                margin-bottom: 24px;
+                color: #9a7a5a;
+            }
+
+        .thank-you-image {
+            display: block;
+            width: 100vw;
+            max-width: 100vw;
+            height: 260px;
+            object-fit: cover;
+            object-position: center;
+            margin: 0 calc(50% - 50vw);
+        }
+
+        @media (min-width: 768px) {
+            .thank-you-image {
+                height: 100vh;
+            }
+        }
+
+        .page-footer {
+            padding: 12px 10px;
+            text-align: center;
+            color: #7a4e2c;
+            font-size: 13px;
+            background: white;
+        }
+
+        .rsvp-thankyou-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(44, 26, 14, 0.45);
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            z-index: 1200;
+        }
+
+        .rsvp-thankyou-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .rsvp-thankyou-modal {
+            width: min(92vw, 480px);
+            background: linear-gradient(140deg, #fff8ef 0%, #fffdf9 60%, #f6e5d3 100%);
+            border: 1px solid rgba(202, 162, 124, 0.5);
+            border-radius: 26px;
+            box-shadow: 0 24px 48px rgba(70, 45, 24, 0.25);
+            padding: 24px 22px;
+            text-align: center;
+            transform: translateY(8px) scale(0.98);
+            transition: transform 0.25s ease;
+        }
+
+        .rsvp-thankyou-overlay.open .rsvp-thankyou-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .thankyou-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(42px, 9vw, 62px);
+            color: #7a4e2c;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .thankyou-body {
+            color: #6f4a2e;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .thankyou-count {
+            margin-top: 10px;
+            font-weight: 700;
+            color: #5b3822;
+        }
+
+        .thankyou-close {
+            margin-top: 16px;
+            min-width: 140px;
+        }
+
+        .missing-modal-list {
+            margin: 12px 0 2px;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+
+        .missing-modal-list li {
+            background: rgba(202, 162, 124, 0.12);
+            color: #6f4a2e;
+            border: 1px solid rgba(202, 162, 124, 0.3);
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 1400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 20% 20%, rgba(248, 230, 209, 0.9), rgba(255, 250, 245, 0.95));
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .page-loader.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page-loader-card {
+            width: min(88vw, 360px);
+            padding: 24px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(202, 162, 124, 0.45);
+            background: #fffdf9;
+            box-shadow: 0 18px 32px rgba(85, 56, 31, 0.18);
+        }
+
+        .page-loader-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(34px, 7vw, 50px);
+            color: #7a4e2c;
+            margin-bottom: 10px;
+        }
+
+        .page-loader-text {
+            color: #7c5a43;
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        .loader-rings {
+            width: 42px;
+            height: 42px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 3px solid rgba(202, 162, 124, 0.28);
+            border-top-color: #caa27c;
+            animation: loaderSpin 0.9s linear infinite;
+        }
+
+        @keyframes loaderSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .button.is-loading {
+            position: relative;
+            opacity: 0.8;
+            pointer-events: none;
+            padding-right: 46px;
+        }
+
+        .button.is-loading::after {
+            content: "";
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            width: 14px;
+            height: 14px;
+            margin-top: -7px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.45);
+            border-top-color: #ffffff;
+            animation: loaderSpin 0.8s linear infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="page-loader" class="page-loader visible" aria-live="polite" aria-busy="true">
+        <div class="page-loader-card">
+            <div class="page-loader-title">Loading...</div>
+            <p id="page-loader-text" class="page-loader-text">Preparing your invitation...</p>
+            <div class="loader-rings" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <div class="flower-container">
+        <img src="dandelion_flowers.png" class="flower-img" alt="dandelion">
+    </div>
+
+    <!-- HERO -->
+    <section class="hero-fullscreen">
+        <img src="couple.png" class="hero-img" alt="Ralph & Melissa">
+
+        <div class="hero-title">
+            Our Forever Adventure starts here!
+        </div>
+
+        <div class="hero-content">
+            <div class="time-boxes">
+                <div class="timebox">
+                    <h2 id="days">00</h2>
+                    <p>Days</p>
+                </div>
+                <div class="timebox">
+                    <h2 id="hours">00</h2>
+                    <p>Hours</p>
+                </div>
+                <div class="timebox">
+                    <h2 id="minutes">00</h2>
+                    <p>Minutes</p>
+                </div>
+                <div class="timebox">
+                    <h2 id="seconds">00</h2>
+                    <p>Seconds</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INVITATION -->
+    <section class="invitation">
+        <div class="section-inner">
+            <div class="bible">"We love because He first loved us"</div>
+            <div class="verse">1 John 4:19</div>
+
+            <p class="intro-text">
+                With joyous hearts,<br><br>
+                Saade Family &amp; Azar Family<br>
+                invite you to celebrate the eternal yes of their<br>
+                son &amp; daughter
+            </p>
+
+            <div class="names">Ralph &amp; Melissa</div>
+            <p class="date-text">Sunday, August 30, 2026</p>
+        </div>
+    </section>
+
+    <!-- BANNER -->
+    <section class="parallax-banner" aria-label="Wedding banner photo">
+        <img
+            src="image00021.jpeg"
+            srcset="banner_2.jpeg 1x, image00021.jpeg 2x"
+            alt="Wedding banner"
+            class="parallax-banner-img"
+        >
+        <div class="banner-title"><span>Let's celebrate!</span></div>
+    </section>
+
+    <!-- CELEBRATION -->
+    <section>
+        <div class="section-inner">
+
+            <div class="venue-card">
+                <div class="venue-info">
+                    <h3>Groom's Reception</h3>
+                    <p>SAADE Residency<br>Bkerke</p>
+                    <p>2:30 PM</p>
+
+                    <a class="button"
+                       href="https://maps.app.goo.gl/8CYbHSGyU6KSjedG6"
+                       target="_blank">
+                        See Location
+                    </a>
+                </div>
+            </div>
+
+            <div class="venue-card">
+                <div class="venue-info">
+                    <h3>Bride's Reception</h3>
+                    <p>Madisson Hotel<br>Jounieh</p>
+                    <p>2:30 PM</p>
+
+                    <a class="button"
+                       href="https://maps.app.goo.gl/U6kujd6irQJSwnio7"
+                       target="_blank">
+                        See Location
+                    </a>
+                </div>
+            </div>
+
+            <div class="venue-card">
+                <img src="church.jpeg" alt="Couvent Saint Sauveur" class="venue-photo">
+
+                <div class="venue-info">
+                    <h3>Wedding Ceremony</h3>
+                    <p>Couvent Saint Sauveur<br>Sarba</p>
+                    <p>5:30 PM</p>
+
+                    <a class="button"
+                       href="https://maps.app.goo.gl/smvbhN2687PLr8Yv8?g_st=ic"
+                       target="_blank">
+                        See Location
+                    </a>
+                </div>
+            </div>
+
+            <div class="venue-card">
+                <img src="venue.png" alt="L'Heritage Venue" class="venue-photo">
+
+                <div class="venue-info">
+                    <h3>Wedding Party</h3>
+                    <p>L'Heritage Venue<br>Zouk</p>
+                    <p>8:00 PM</p>
+
+                    <a class="button"
+                       href="https://maps.app.goo.gl/RFCjsYj6qqtCC3sc6?g_st=ic"
+                       target="_blank">
+                        See Location
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RSVP BANNER -->
+    <section class="rsvp-banner" aria-label="RSVP banner">
+        <div class="section-inner">
+            <div class="rsvp-banner-photos">
+                <div class="rsvp-photo-frame left">
+                    <img src="profile_2.png" alt="Ralph and Melissa portrait" class="rsvp-photo">
+                </div>
+                <div class="rsvp-photo-frame right">
+                    <img src="look_rsvp.jpg" alt="Ralph and Melissa together" class="rsvp-photo">
+                </div>
+            </div>
+
+            <div class="rsvp-banner-title">Be our guest!</div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section>
+        <div class="section-inner">
+            <p style="margin-bottom:20px;">Kindly confirm your attendance</p>
+            <p id="invitation-status" style="color:#9a7a5a; margin-bottom:16px;"></p>
+
+            <div id="guest-list"></div>
+
+            <div class="wishes-box">
+                <p>Leave a wish for Ralph &amp; Melissa</p>
+                <textarea id="wishes" placeholder="Write a message to the couple..."></textarea>
+                <button id="send-response-btn" class="button" onclick="submitRSVP()">Send Response</button>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <!-- REGISTRY -->
+    <section class="registry-section">
+        <div class="registry-shell">
+            <h2>Registry</h2>
+
+            <p class="registry-sub">
+                Your presence is our favorite gift. However, if you would like to contribute:
+            </p>
+
+            <div class="registry-list">
+                <div class="registry-row"><strong>Wish account:</strong> 1234598</div>
+                <div class="registry-row"><strong>Bank Transfer:</strong> FR125656</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THANK YOU -->
+    <section class="thank-you-section">
+        <h2>Thank You!</h2>
+        <p>We can't wait to celebrate with you</p>
+        <img src="kiss_attempt.jpeg" alt="Ralph and Melissa" class="thank-you-image">
+    </section>
+
+    <footer class="page-footer">
+        Designed and developed by the groom & bride ;)
+    </footer>
+
+    <div id="thankyou-modal" class="rsvp-thankyou-overlay" aria-hidden="true" role="dialog" aria-labelledby="thankyou-title">
+        <div class="rsvp-thankyou-modal">
+            <h2 id="thankyou-title" class="thankyou-title">Thank you!</h2>
+            <p id="thankyou-body" class="thankyou-body"></p>
+            <p id="thankyou-count" class="thankyou-count"></p>
+            <button class="button thankyou-close" type="button" onclick="closeThankYouModal()">Close</button>
+        </div>
+    </div>
+
+    <div id="missing-response-modal" class="rsvp-thankyou-overlay" aria-hidden="true" role="dialog" aria-labelledby="missing-response-title">
+        <div class="rsvp-thankyou-modal">
+            <h2 id="missing-response-title" class="thankyou-title">Almost there!</h2>
+            <p class="thankyou-body">Please choose attending or not attending for the following guest(s):</p>
+            <ul id="missing-response-list" class="missing-modal-list"></ul>
+            <button class="button thankyou-close" type="button" onclick="closeMissingResponseModal()">Got it</button>
+        </div>
+    </div>
+
+    <script>
+        /* =====================
+           DANDELION SEEDS
+        ===================== */
+
+        function getSeedOrigin() {
+            return {
+                x: 80,
+                y: window.innerHeight - 200
+            };
+        }
+
+        function createSeed() {
+            const seed = document.createElement("div");
+            seed.classList.add("seed");
+
+            const origin = getSeedOrigin();
+            seed.style.left = origin.x + "px";
+            seed.style.top = origin.y + "px";
+
+            const moveX = 300 + Math.random() * 900;
+            const moveY = -300 + Math.random() * 350;
+
+            seed.style.setProperty("--moveX", `${moveX}px`);
+            seed.style.setProperty("--moveY", `${moveY}px`);
+
+            seed.style.animationDuration = (7 + Math.random() * 6) + "s";
+
+            const img = document.createElement("img");
+            img.src = "seed_4.png";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "contain";
+
+            seed.appendChild(img);
+            document.body.appendChild(seed);
+
+            setTimeout(() => seed.remove(), 15000);
+        }
+
+        if (window.innerWidth < 768) {
+            setInterval(() => {
+                createSeed();
+                if (Math.random() > 0.55) setTimeout(createSeed, 250);
+                if (Math.random() > 0.82) setTimeout(createSeed, 450);
+            }, 500);
+        }
+
+        /* =====================
+           COUNTDOWN
+        ===================== */
+
+        const weddingDate = new Date("Aug 30, 2026 17:30:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+
+            if (diff <= 0) {
+                ["days", "hours", "minutes", "seconds"].forEach(id => {
+                    document.getElementById(id).textContent = "00";
+                });
+                return;
+            }
+
+            document.getElementById("days").textContent =
+                String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, "0");
+
+            document.getElementById("hours").textContent =
+                String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, "0");
+
+            document.getElementById("minutes").textContent =
+                String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
+
+            document.getElementById("seconds").textContent =
+                String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, "0");
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        /* =====================
+           RSVP
+        ===================== */
+
+        let invId = null;
+        let guests = [];
+        const MIN_LOADER_VISIBLE_MS = 650;
+        let pageLoaderShownAt = 0;
+
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function getInvIdFromUrl() {
+            const pathParts = window.location.pathname.split("/").filter(Boolean);
+            if (pathParts[0] === "invite" && pathParts[1]) {
+                return decodeURIComponent(pathParts[1]);
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            return params.get("invId") || params.get("invitationId") || params.get("id") || params.get("guestId");
+        }
+
+        function setInvitationStatus(message, isError = false) {
+            const statusEl = document.getElementById("invitation-status");
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? "#b44343" : "#9a7a5a";
+        }
+
+        function showPageLoader(message) {
+            const loader = document.getElementById("page-loader");
+            const text = document.getElementById("page-loader-text");
+            if (message) text.textContent = message;
+            pageLoaderShownAt = Date.now();
+            loader.classList.add("visible");
+            loader.setAttribute("aria-busy", "true");
+        }
+
+        async function hidePageLoader() {
+            const loader = document.getElementById("page-loader");
+            const elapsed = Date.now() - pageLoaderShownAt;
+            if (elapsed < MIN_LOADER_VISIBLE_MS) {
+                await wait(MIN_LOADER_VISIBLE_MS - elapsed);
+            }
+            loader.classList.remove("visible");
+            loader.setAttribute("aria-busy", "false");
+        }
+
+        function setSubmitLoading(isLoading) {
+            const btn = document.getElementById("send-response-btn");
+            if (!btn) return;
+            btn.disabled = isLoading;
+            btn.classList.toggle("is-loading", isLoading);
+            btn.textContent = isLoading ? "Sending..." : "Send Response";
+        }
+
+        function showThankYouModal(attendingCount, totalCount) {
+            const modal = document.getElementById("thankyou-modal");
+            const body = document.getElementById("thankyou-body");
+            const count = document.getElementById("thankyou-count");
+
+            body.textContent = attendingCount === 0
+                ? "We'll raise a glass to you even in your absence, but we'll celebrate together another time!"
+                : "We're so excited to celebrate and make unforgettable memories with you!";
+
+            count.textContent = `${attendingCount} of ${totalCount} guest(s) marked as attending.`;
+            modal.classList.add("open");
+            modal.setAttribute("aria-hidden", "false");
+        }
+
+        function closeThankYouModal() {
+            const modal = document.getElementById("thankyou-modal");
+            modal.classList.remove("open");
+            modal.setAttribute("aria-hidden", "true");
+        }
+
+        function showMissingResponseModal(missingGuestNames) {
+            const modal = document.getElementById("missing-response-modal");
+            const list = document.getElementById("missing-response-list");
+            list.innerHTML = "";
+
+            missingGuestNames.forEach(name => {
+                const item = document.createElement("li");
+                item.textContent = name;
+                list.appendChild(item);
+            });
+
+            modal.classList.add("open");
+            modal.setAttribute("aria-hidden", "false");
+        }
+
+        function closeMissingResponseModal() {
+            const modal = document.getElementById("missing-response-modal");
+            modal.classList.remove("open");
+            modal.setAttribute("aria-hidden", "true");
+        }
+
+        function buildGuestList() {
+            const container = document.getElementById("guest-list");
+
+                        guests.forEach((guest, index) => {
+                const card = document.createElement("div");
+                card.classList.add("guest-card");
+
+                card.innerHTML = `
+                            <div class="guest-name">${guest.name || "Guest"}</div>
+
+              <div class="rsvp-options">
+                <input type="radio" name="guest_${index}" id="yes_${index}" value="yes">
+                <label for="yes_${index}">✓ Attending</label>
+
+                <input type="radio" name="guest_${index}" id="no_${index}" value="no">
+                <label for="no_${index}">✗ Not Attending</label>
+              </div>
+            `;
+
+                container.appendChild(card);
+            });
+        }
+
+        async function loadInvitation() {
+            showPageLoader("Preparing your invitation...");
+            invId = getInvIdFromUrl();
+
+            if (!invId) {
+                setInvitationStatus("Missing invId in URL. Example: /invite/<id> or ?invId=<id>", true);
+                buildGuestList();
+                await hidePageLoader();
+                return;
+            }
+
+            setInvitationStatus("Loading invitation details...");
+
+            try {
+                const response = await fetch(`/invitation/${encodeURIComponent(invId)}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to load invitation (${response.status})`);
+                }
+
+                const invitation = await response.json();
+                guests = Array.isArray(invitation.guests) ? invitation.guests : [];
+
+                setInvitationStatus(
+                    guests.length
+                        ? ""
+                        : "No invitees were found for this invitation."
+                );
+
+                buildGuestList();
+            } catch (error) {
+                setInvitationStatus(error.message || "Unable to load invitation.", true);
+                guests = [];
+                buildGuestList();
+            } finally {
+                await hidePageLoader();
+            }
+        }
+
+        async function submitRSVP() {
+            if (!invId) {
+                alert("Invitation ID is missing from the URL.");
+                return;
+            }
+
+            if (!guests.length) {
+                alert("No invitees available for RSVP.");
+                return;
+            }
+
+            const results = [];
+            let allAnswered = true;
+            const missingGuestNames = [];
+
+            guests.forEach((guest, index) => {
+                const selected = document.querySelector(`input[name="guest_${index}"]:checked`);
+
+                if (!selected) {
+                    allAnswered = false;
+                    missingGuestNames.push(guest.name || "Guest");
+                } else {
+                    results.push({
+                        _id: guest._id,
+                        name: guest.name || "Guest",
+                        attending: selected.value === "yes"
+                    });
+                }
+            });
+
+            if (!allAnswered) {
+                showMissingResponseModal(missingGuestNames);
+                return;
+            }
+
+            const wish = document.getElementById("wishes").value.trim();
+            const submitStartedAt = Date.now();
+
+            try {
+                setSubmitLoading(true);
+                const response = await fetch(`/invitation/${encodeURIComponent(invId)}/reply`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        guests: results.map(r => ({ _id: r._id, attending: r.attending })),
+                        message: wish
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`RSVP failed (${response.status})`);
+                }
+
+                const attending = results.filter(r => r.attending).map(r => r.name);
+                showThankYouModal(attending.length, results.length);
+            } catch (error) {
+                alert(error.message || "Unable to submit RSVP.");
+            } finally {
+                const elapsed = Date.now() - submitStartedAt;
+                if (elapsed < MIN_LOADER_VISIBLE_MS) {
+                    await wait(MIN_LOADER_VISIBLE_MS - elapsed);
+                }
+                setSubmitLoading(false);
+            }
+        }
+
+        loadInvitation();
+    </script>
+
+</body>
+</html>
