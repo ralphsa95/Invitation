@@ -223,6 +223,19 @@
             background: #fffaf5;
         }
 
+        .bible-verse-image {
+            display: block;
+            width: min(100%, 460px);
+            margin: 8px auto 36px;
+        }
+
+        @media (min-width: 768px) {
+            .bible-verse-image {
+                width: min(100%, 520px);
+                transform: translateX(-12px);
+            }
+        }
+
         .bible {
             font-family: 'Parisienne', cursive;
             font-size: clamp(34px, 8vw, 58px);
@@ -878,7 +891,7 @@
         <img src="couple.png" class="hero-img" alt="Ralph & Melissa">
 
         <div class="hero-title">
-            Our Forever Starts Here!
+            Our forever starts here!
         </div>
 
         <div class="hero-content">
@@ -906,8 +919,7 @@
     <!-- INVITATION -->
     <section class="invitation">
         <div class="section-inner">
-            <div class="bible">"We love because He first loved us"</div>
-            <div class="verse">1 John 4:19</div>
+            <img src="bible_verse.png" alt="Bible verse" class="bible-verse-image">
 
             <p class="intro-text">
                 With joyous hearts,<br><br>
