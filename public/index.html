@@ -170,7 +170,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            width: min(100%, 560px);
+            width: clamp(300px, 84vw, 560px);
             padding: 0 18px;
         }
 
@@ -194,8 +194,33 @@
             }
 
             .hero-content {
-                top: 188px;
-                width: min(100%, 620px);
+                top: auto;
+                bottom: clamp(20px, 6vh, 56px);
+                width: clamp(360px, 58vw, 620px);
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .hero-content {
+                width: clamp(320px, 46vw, 460px);
+            }
+
+            .time-boxes {
+                gap: 6px;
+            }
+
+            .timebox {
+                padding: 6px 4px;
+                border-radius: 14px;
+            }
+
+            .timebox h2 {
+                font-size: clamp(12px, 1.35vw, 20px);
+            }
+
+            .timebox p {
+                font-size: clamp(6px, 0.6vw, 8px);
+                letter-spacing: 0.55px;
             }
         }
 
@@ -206,27 +231,27 @@
         .time-boxes {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: clamp(5px, 0.8vw, 9px);
         }
 
         .timebox {
             background: rgba(255,255,255,0.18);
             backdrop-filter: blur(8px);
             border-radius: 16px;
-            padding: 10px 6px;
+            padding: clamp(6px, 0.9vw, 9px) clamp(4px, 0.7vw, 7px);
             color: white;
         }
 
             .timebox h2 {
-                font-size: clamp(20px, 5.5vw, 38px);
+                font-size: clamp(13px, 2vw, 26px);
                 color: white;
             }
 
             .timebox p {
                 margin-top: 4px;
-                font-size: clamp(8px, 1.5vw, 11px);
+                font-size: clamp(6px, 0.7vw, 9px);
                 text-transform: uppercase;
-                letter-spacing: 1px;
+                letter-spacing: 0.7px;
                 color: rgba(255,255,255,0.85);
             }
 
@@ -268,6 +293,7 @@
         .intro-text {
             max-width: 650px;
             margin: 0 auto;
+            white-space: nowrap;
             line-height: 1.8;
             font-size: clamp(18px, 2.4vw, 20px);
         }
@@ -472,6 +498,17 @@
 
             .venue-info {
                 padding: 20px;
+            }
+
+            .venue-card.reception-card {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .venue-card.reception-card .venue-info {
+                max-width: 520px;
+                padding: 20px 10px;
             }
         }
 
@@ -957,13 +994,16 @@
 
             <p class="intro-text">
                 With joyous hearts,<br><br>
-                Saade Family &amp; Azar Family<br>
-                Invite you to celebrate the eternal YES of their<br>
-                Son &amp; Daughter
+                Charbel &amp; Claudette Saade<br>
+                Together with<br>
+                Georges &amp; Madeleine Azar<br><br>
+                <b>Invite you to celebrate <br> 
+                The eternal YES of their<br>
+                Son &amp; Daughter</b>
             </p>
 
             <div class="names">Ralph &amp; Melissa</div>
-            <p class="date-text">Sunday, August 30, 2026</p>
+            <p class="date-text"><b>Sunday, August 30, 2026</b></p>
         </div>
     </section>
 
@@ -982,7 +1022,7 @@
     <section>
         <div class="section-inner">
 
-            <div class="venue-card">
+            <div class="venue-card reception-card">
                 <div class="venue-info">
                     <h3>Groom's Reception</h3>
                     <p>SAADE Residency<br>Bkerke</p>
@@ -996,7 +1036,7 @@
                 </div>
             </div>
 
-            <div class="venue-card">
+            <div class="venue-card reception-card">
                 <div class="venue-info">
                     <h3>Bride's Reception</h3>
                     <p>Madisson Hotel<br>Jounieh</p>
