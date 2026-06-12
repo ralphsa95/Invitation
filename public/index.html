@@ -1054,7 +1054,7 @@
     <audio id="bg-music" loop preload="auto" autoplay playsinline>
         <source src="dandellions.mpeg" type="audio/mpeg">
     </audio>
-    <button id="music-control-btn" class="button music-control" type="button">Play Music</button>
+    <button id="music-control-btn" class="button music-control" type="button">&#9658; Play Music</button>
 
     <!-- HERO -->
     <section class="hero-fullscreen">
@@ -1418,7 +1418,9 @@
             }, { once: true });
 
             const updateButtonText = () => {
-                controlBtn.textContent = music.paused ? "Play Music" : "Pause Music";
+                controlBtn.innerHTML = music.paused
+                    ? "&#9658; Play Music"
+                    : "&#10074;&#10074; Pause Music";
             };
 
             controlBtn.addEventListener("click", async () => {
