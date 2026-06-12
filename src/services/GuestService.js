@@ -71,6 +71,7 @@ async function replyInvitation(invitationIdVal, guests, message) {
             {
                 $set: {
                     message: normalizedMessage,
+                    status: 'responded',
                     repliedAt: new Date()
                 }
             }

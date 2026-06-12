@@ -235,7 +235,7 @@
         }
 
         .timebox {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.3);
             backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: clamp(6px, 0.9vw, 9px) clamp(4px, 0.7vw, 7px);
@@ -624,6 +624,10 @@
             justify-content: center;
         }
 
+        .rsvp-options.locked {
+            pointer-events: none;
+        }
+
             .rsvp-options input[type="radio"] {
                 display: none;
             }
@@ -642,6 +646,17 @@
 
             .rsvp-options input[type="radio"]:checked + label {
                 background: #caa27c;
+                color: white;
+            }
+
+            .rsvp-options input[type="radio"]:disabled + label {
+                opacity: 1;
+                cursor: default;
+            }
+
+            .rsvp-options input[type="radio"]:disabled:checked + label {
+                background: #b88e68;
+                border-color: #b88e68;
                 color: white;
             }
 
@@ -682,6 +697,74 @@
                 outline: none;
                 background: #fffaf5;
             }
+
+        .response-message {
+            position: relative;
+            overflow: hidden;
+            padding: 22px 20px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, #fffdf9 0%, #fff7ee 100%);
+            border: 1px solid rgba(202, 162, 124, 0.28);
+            box-shadow: 0 14px 32px rgba(70, 45, 24, 0.08);
+            color: #6f4a2e;
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .response-message::before {
+            content: "RSVP received";
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(202, 162, 124, 0.14);
+            color: #b88e68;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .response-message p {
+            margin: 0;
+            font-size: clamp(16px, 2vw, 18px);
+        }
+
+        .response-message .response-subtext {
+            display: block;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #9a7a5a;
+        }
+
+        .add-to-calendar-wrap {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .calendar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 20px;
+            border-radius: 999px;
+            border: 2px solid #caa27c;
+            background: transparent;
+            color: #caa27c;
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .calendar-btn:hover {
+            background: #caa27c;
+            color: white;
+        }
 
         /* =====================
            REGISTRY
@@ -773,7 +856,7 @@
             padding: 12px 10px;
             text-align: center;
             color: #7a4e2c;
-            font-size: 13px;
+            font-size: 16px;
             background: white;
         }
 
@@ -1253,6 +1336,7 @@
 
         let invId = null;
         let guests = [];
+        let invitationResponded = false;
         const MIN_LOADER_VISIBLE_MS = 650;
         let pageLoaderShownAt = 0;
 
@@ -1303,14 +1387,18 @@
             btn.textContent = isLoading ? "Sending..." : "RSVP";
         }
 
+        function getResponseMessage(attendingCount, totalCount) {
+            return attendingCount === 0
+                ? "We'll raise a glass to you even in your absence, but we'll celebrate together another time!"
+                : "We're so excited to celebrate and make unforgettable memories with you!";
+        }
+
         function showThankYouModal(attendingCount, totalCount) {
             const modal = document.getElementById("thankyou-modal");
             const body = document.getElementById("thankyou-body");
             const count = document.getElementById("thankyou-count");
 
-            body.textContent = attendingCount === 0
-                ? "We'll raise a glass to you even in your absence, but we'll celebrate together another time!"
-                : "We're so excited to celebrate and make unforgettable memories with you!";
+            body.textContent = getResponseMessage(attendingCount, totalCount);
 
             count.textContent = `${attendingCount} of ${totalCount} guest(s) marked as attending.`;
             modal.classList.add("open");
@@ -1344,21 +1432,55 @@
             modal.setAttribute("aria-hidden", "true");
         }
 
+        function getGoogleCalendarUrl() {
+            const startDate = '20260830T173000';
+            const endDate   = '20260831T013000';
+            const title     = encodeURIComponent('Ralph & Melissa Wedding');
+            const location  = encodeURIComponent('Couvent Saint Sauveur, Sarba, Lebanon');
+            const details   = encodeURIComponent('Wedding ceremony of Ralph Saade & Melissa Azar');
+            return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}&sf=true&output=xml`;
+        }
+
+        function renderRespondedMessage(attendingCount, totalCount) {
+            const wishesBox = document.querySelector(".wishes-box");
+            if (!wishesBox) return;
+
+            const calendarButtons = attendingCount > 0 ? `
+                <div class="add-to-calendar-wrap">
+                    <a href="${getGoogleCalendarUrl()}" target="_blank" rel="noopener" class="calendar-btn">Add to Google Calendar</a>
+                </div>
+            ` : '';
+
+            wishesBox.innerHTML = `
+                <div class="response-message">
+                    <p>${getResponseMessage(attendingCount, totalCount)}</p>
+                    <span class="response-subtext">${attendingCount} of ${totalCount} guest(s) marked as attending.</span>
+                    ${calendarButtons}
+                </div>
+            `;
+        }
+
         function buildGuestList() {
             const container = document.getElementById("guest-list");
+            container.innerHTML = "";
 
-                        guests.forEach((guest, index) => {
+            guests.forEach((guest, index) => {
                 const card = document.createElement("div");
                 card.classList.add("guest-card");
+
+                const attendingValue = guest.attending;
+                const isAttending = attendingValue === true || attendingValue === "yes" || attendingValue === "accepted";
+                const isDeclined = attendingValue === false || attendingValue === "no" || attendingValue === "declined";
+                const locked = invitationResponded;
 
                 card.innerHTML = `
                             <div class="guest-name">${guest.name || "Guest"}</div>
 
-              <div class="rsvp-options">
-                <input type="radio" name="guest_${index}" id="yes_${index}" value="yes">
+              <div class="rsvp-options ${locked ? "locked" : ""}">
+                                <input type="radio" name="guest_${index}" id="yes_${index}" value="yes" ${isAttending ? "checked" : ""} ${locked ? "disabled" : ""}>
                 <label for="yes_${index}">✓ Attending</label>
 
-                <input type="radio" name="guest_${index}" id="no_${index}" value="no">
+                                <input type="radio" name="guest_${index}" id="no_${index}" value="no" ${isDeclined ? "checked" : ""} ${locked ? "disabled" : ""}>
                 <label for="no_${index}">✗ Not Attending</label>
               </div>
             `;
@@ -1388,6 +1510,7 @@
 
                 const invitation = await response.json();
                 guests = Array.isArray(invitation.guests) ? invitation.guests : [];
+                invitationResponded = invitation.status === "responded";
 
                 setInvitationStatus(
                     guests.length
@@ -1396,6 +1519,11 @@
                 );
 
                 buildGuestList();
+
+                if (invitationResponded) {
+                    const attendingCount = guests.filter(guest => guest.attending === true || guest.attending === "yes" || guest.attending === "accepted").length;
+                    renderRespondedMessage(attendingCount, guests.length);
+                }
             } catch (error) {
                 setInvitationStatus(error.message || "Unable to load invitation.", true);
                 guests = [];
@@ -1459,6 +1587,8 @@
                 if (!response.ok) {
                     throw new Error(`RSVP failed (${response.status})`);
                 }
+
+                await loadInvitation();
 
                 const attending = results.filter(r => r.attending).map(r => r.name);
                 showThankYouModal(attending.length, results.length);
