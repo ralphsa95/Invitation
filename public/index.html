@@ -860,6 +860,17 @@
             background: white;
         }
 
+        .music-control {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 2100;
+            margin-top: 0;
+            display: none;
+            padding: 6px 12px;
+            font-size: 11px;
+        }
+
         .rsvp-thankyou-overlay {
             position: fixed;
             inset: 0;
@@ -1039,6 +1050,11 @@
     <div class="flower-container">
         <img src="dandelion_flowers.png" class="flower-img" alt="dandelion">
     </div>
+
+    <audio id="bg-music" loop preload="auto" autoplay playsinline>
+        <source src="dandellions.mpeg" type="audio/mpeg">
+    </audio>
+    <button id="music-control-btn" class="button music-control" type="button">Play Music</button>
 
     <!-- HERO -->
     <section class="hero-fullscreen">
@@ -1337,6 +1353,7 @@
         let invId = null;
         let guests = [];
         let invitationResponded = false;
+        const MUSIC_START_SECONDS = 56;
         const MIN_LOADER_VISIBLE_MS = 650;
         let pageLoaderShownAt = 0;
 
@@ -1385,6 +1402,51 @@
             btn.disabled = isLoading;
             btn.classList.toggle("is-loading", isLoading);
             btn.textContent = isLoading ? "Sending..." : "RSVP";
+        }
+
+        async function startMusicOnLoad() {
+            const music = document.getElementById("bg-music");
+            const controlBtn = document.getElementById("music-control-btn");
+            if (!music || !controlBtn) return;
+
+            music.volume = 0.6;
+            music.muted = false;
+            music.addEventListener("loadedmetadata", () => {
+                if (Number.isFinite(music.duration) && music.duration > MUSIC_START_SECONDS) {
+                    music.currentTime = MUSIC_START_SECONDS;
+                }
+            }, { once: true });
+
+            const updateButtonText = () => {
+                controlBtn.textContent = music.paused ? "Play Music" : "Pause Music";
+            };
+
+            controlBtn.addEventListener("click", async () => {
+                try {
+                    if (music.paused) {
+                        if (music.currentTime < MUSIC_START_SECONDS) {
+                            music.currentTime = MUSIC_START_SECONDS;
+                        }
+                        await music.play();
+                    } else {
+                        music.pause();
+                    }
+                    updateButtonText();
+                } catch (err) {
+                    updateButtonText();
+                }
+            });
+
+            try {
+                await music.play();
+            } catch (err) {
+                controlBtn.style.display = "inline-block";
+                updateButtonText();
+                return;
+            }
+
+            controlBtn.style.display = "inline-block";
+            updateButtonText();
         }
 
         function getResponseMessage(attendingCount, totalCount) {
@@ -1603,6 +1665,7 @@
             }
         }
 
+        startMusicOnLoad();
         loadInvitation();
     </script>
 
