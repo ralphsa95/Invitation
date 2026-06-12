@@ -416,6 +416,14 @@
             .parallax-banner::before {
                 background: linear-gradient(rgba(30,20,10,0.12), rgba(30,20,10,0.12));
             }
+
+            .timebox h2 {
+                font-size: clamp(16px, 5.2vw, 24px);
+            }
+
+            .timebox p {
+                font-size: clamp(8px, 2.2vw, 11px);
+            }
         }
 
         /* =====================
@@ -1054,7 +1062,7 @@
     <audio id="bg-music" loop preload="auto" autoplay playsinline>
         <source src="dandellions.mpeg" type="audio/mpeg">
     </audio>
-    <button id="music-control-btn" class="button music-control" type="button">&#9658; Play Music</button>
+    <button id="music-control-btn" class="button music-control" type="button">&#9658; &#9835;</button>
 
     <!-- HERO -->
     <section class="hero-fullscreen">
@@ -1419,8 +1427,8 @@
 
             const updateButtonText = () => {
                 controlBtn.innerHTML = music.paused
-                    ? "&#9658; Play Music"
-                    : "&#10074;&#10074; Pause Music";
+                    ? "&#9658; &#9835;"
+                    : "&#10074;&#10074; &#9835;";
             };
 
             controlBtn.addEventListener("click", async () => {
