@@ -32,9 +32,12 @@ const options = {
             description: 'API documentation for my Node.js app',
         },
         servers: [
-            {
-                url: 'http://localhost:3000',
-            },
+          {
+            url: 'http://localhost:3000'
+          },
+          {
+            url: 'https://invitation-9uyr.onrender.com'
+          }
         ],
         components: {
             securitySchemes: {
