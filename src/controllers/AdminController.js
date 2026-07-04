@@ -42,9 +42,9 @@ exports.uploadGuestsController = async (req, res) => {
 }
 
 exports.addUpdateInvitationsBatch = async (req, res) => {
-    const invitations = req.body.guests; // expect an array of guest objects
+    const invitations = req.body.invitations; // expect an array of guest objects
 
-    if (!Array.isArray(invitations) || guests.length === 0) {
+    if (!Array.isArray(invitations) || invitations.length === 0) {
         return res.status(400).json({ error: 'Invitations list is required' });
     }
 
