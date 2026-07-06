@@ -1060,7 +1060,7 @@
     </div>
 
     <audio id="bg-music" loop preload="auto" autoplay playsinline>
-        <source src="dandellions.mp3" type="audio/mpeg">
+        <source src="dandellions.mp3" type="audio/mp3">
     </audio>
     <button id="music-control-btn" class="button music-control" type="button">&#9658; &#9835;</button>
 
@@ -1360,7 +1360,6 @@
         let invId = null;
         let guests = [];
         let invitationResponded = false;
-        const MUSIC_START_SECONDS = 56;
         const MIN_LOADER_VISIBLE_MS = 650;
         let pageLoaderShownAt = 0;
 
@@ -1415,28 +1414,20 @@
             const music = document.getElementById("bg-music");
             const controlBtn = document.getElementById("music-control-btn");
             if (!music || !controlBtn) return;
-
+        
             music.volume = 0.6;
             music.muted = false;
-            music.addEventListener("loadedmetadata", () => {
-                if (Number.isFinite(music.duration) && music.duration > MUSIC_START_SECONDS) {
-                    music.currentTime = MUSIC_START_SECONDS;
-                }
-            }, { once: true });
-
+        
             const updateButtonText = () => {
                 controlBtn.innerHTML = music.paused
                     ? "&#9658; &#9835;"
                     : "&#10074;&#10074; &#9835;";
             };
-
+        
             controlBtn.addEventListener("click", async () => {
                 try {
                     if (music.paused) {
-                        if (music.currentTime < MUSIC_START_SECONDS) {
-                            music.currentTime = MUSIC_START_SECONDS;
-                        }
-                        await music.play();
+                        await music.play(); // play from current position (default is start)
                     } else {
                         music.pause();
                     }
@@ -1445,15 +1436,16 @@
                     updateButtonText();
                 }
             });
-
+        
             try {
+                music.currentTime = 0; // ensure it starts from beginning on load
                 await music.play();
             } catch (err) {
                 controlBtn.style.display = "inline-block";
                 updateButtonText();
                 return;
             }
-
+        
             controlBtn.style.display = "inline-block";
             updateButtonText();
         }
